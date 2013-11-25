@@ -3,61 +3,117 @@
 <head>
     <title>Sketch Pad</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
-	<link rel="stylesheet" href="lib/jquery.mobile/jquery.mobile-1.2.0.min.css" />
 	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
-	<script src="lib/jquery.mobile/jquery.mobile-1.2.0.min.js"></script>
     <style type="text/css">
-	  body {
-		margin:0px;
-		width:100%;
-		height:100%;
-		overflow:hidden;
-        /* prevent text selection on ui */
-        user-select: none;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        /* prevent scrolling in windows phone */
-        -ms-touch-action: none;
-	  }
-	  #content {
-          overflow:hidden;
-		  background-color:#ddd;
-	  }
-	  #canvas{
-		cursor:crosshair ;
-        background-color:#fff;
-	  }
-	  .palette-case {
-		width:260px;
-		margin:auto;
-		text-align:center;
-	  }
-	  .palette-box {
-		float:left;
-		padding:2px 6px 2px 6px;
-	  }
-	  .palette {
-		border:2px solid #777;
-		height:36px;
-		width:36px;
-	  }
-	  .red{
-		background-color:#c22;
-	  }
-	  .blue{
-		background-color:#22c;
-	  }
-	  .green{
-		background-color:#2c2;
-	  }
-	  .white{
-		background-color:#fff;
-	  }
-	  .black{
-		background-color:#000;
-		border:2px dashed #fff;
-	  }
+body {
+    margin:0px;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    font-family:Arial;
+    /* prevent text selection on ui */
+    user-select: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    /* prevent scrolling in windows phone */
+    -ms-touch-action: none;
+    /* prevent selection highlight */
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+        
+.header, .footer{
+    position: absolute;
+    background-color: #222;
+    text-align: center;
+}
+.header {
+    top: 0px;
+    left: 0px;
+    right: 0px;
+    height: 32px;
+    padding:6px;
+}
+.footer {
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    height: 42px;
+    padding:2px;    
+}
+.title {
+    width: auto;
+    line-height: 32px;
+    font-size: 20px;
+    font-weight: bold;
+    color: #eee;
+    text-shadow: 0px -1px #000;
+    padding:0 60px;
+}
+.navbtn {
+    cursor: pointer;
+    float:left;
+    padding: 6px 10px;
+    font-weight: bold;
+    line-height: 18px;
+    font-size: 14px;
+    color: #eee;
+    text-shadow: 0px -1px #000;
+    border: solid 1px #111;
+    border-radius: 4px;
+    background-color: #404040;
+    box-shadow: 0 0 1px 1px #555,inset 0 1px 0 0 #666;     
+}
+.navbtn-hover, .navbtn:active {
+    color: #222;
+    text-shadow: 0px 1px #aaa;
+    background-color: #aaa;
+    box-shadow: 0 0 1px 1px #444,inset 0 1px 0 0 #ccc;   
+}
+
+#content{
+    position: absolute;
+    top: 44px;
+    left: 0px;
+    right: 0px;
+    bottom: 46px;
+    overflow:hidden;
+    background-color:#ddd;
+}
+#canvas{
+    cursor:crosshair ;
+    background-color:#fff;
+}
+.palette-case {
+    width:260px;
+    margin:auto;
+    text-align:center;
+}
+.palette-box {
+    float:left;
+    padding:2px 6px 2px 6px;
+}
+.palette {
+    border:2px solid #777;
+    height:36px;
+    width:36px;
+}
+.red{
+    background-color:#c22;
+}
+.blue{
+    background-color:#22c;
+}
+.green{
+    background-color:#2c2;
+}
+.white{
+    background-color:#fff;
+}
+.black{
+    background-color:#000;
+    border:2px dashed #fff;
+}
     </style>
 	<script type="text/javascript">
 	
@@ -69,10 +125,7 @@ $(document).ready(function () {
     setTimeout(function(){
 	   newCanvas();
     }, 1000);
-	
-	// prevent footer to toggle on touch
-	$("[data-role=footer]").fixedtoolbar({ tapToggle: false });
-	
+		
 	// reset palette selection (css) and select the clicked color for canvas strokeStyle
 	$(".palette").click(function(){
 		$(".palette").css("border-color", "#777");
@@ -111,15 +164,17 @@ function newCanvas(){
 // prototype to	start drawing on touch using canvas moveTo and lineTo
 $.fn.drawTouch = function() {
 	var start = function(e) {
+        e = e.originalEvent;
 		ctx.beginPath();
-		x = e.originalEvent.changedTouches[0].pageX;
-		y = e.originalEvent.changedTouches[0].pageY-44;
+		x = e.changedTouches[0].pageX;
+		y = e.changedTouches[0].pageY-44;
 		ctx.moveTo(x,y);
 	};
 	var move = function(e) {
 		e.preventDefault();
-		x = e.originalEvent.changedTouches[0].pageX;
-		y = e.originalEvent.changedTouches[0].pageY-44;
+        e = e.originalEvent;
+		x = e.changedTouches[0].pageX;
+		y = e.changedTouches[0].pageY-44;
 		ctx.lineTo(x,y);
 		ctx.stroke();
 	};
@@ -130,15 +185,17 @@ $.fn.drawTouch = function() {
 // prototype to	start drawing on pointer(microsoft ie) using canvas moveTo and lineTo
 $.fn.drawPointer = function() {
 	var start = function(e) {
+        e = e.originalEvent;
 		ctx.beginPath();
-		x = e.originalEvent.pageX;
-		y = e.originalEvent.pageY-44;
+		x = e.pageX;
+		y = e.pageY-44;
 		ctx.moveTo(x,y);
 	};
 	var move = function(e) {
 		e.preventDefault();
-		x = e.originalEvent.pageX;
-		y = e.originalEvent.pageY-44;
+        e = e.originalEvent;
+		x = e.pageX;
+		y = e.pageY-44;
 		ctx.lineTo(x,y);
 		ctx.stroke();
     };
@@ -175,13 +232,13 @@ $.fn.drawMouse = function() {
 	</script>
 </head>
 <body>
-<div data-role="page" id="page1">
-    <div data-theme="a" data-role="header">
-        <h3>Sketch Pad</h3>
-		<a id="new" data-role="button" data-theme="b" class="ui-btn-left">New</a>
+<div id="page">
+    <div class="header">
+		<a id="new" class="navbtn">New</a>
+        <div class="title">Sketch Pad</div>
     </div>
     <div id="content"><p style="text-align:center">Loading Canvas...</p></div>
-    <div data-theme="a" data-role="footer" data-position="fixed">
+    <div class="footer">
 		<div class="palette-case">
 			<div class="palette-box">
 				<div class="palette white"></div>
