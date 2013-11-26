@@ -31,3 +31,5 @@ Canvas drawing app implemented with jQuery Mobile for UI elements, other code sa
 Canvas drawing app with an additional feature to use device's accelerometer to draw by tilting the device in different direction, code same as index_jQueryMobile.html + Cordova's accelerometer implementation.
 
 -
+
+![alt tag](https://raw.github.com/krisrak/html5-canvas-drawing-app/master/screenshot.png)
