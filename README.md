@@ -4,7 +4,7 @@ html5-canvas-drawing-app
 Sketchpad app using html5 canvas to draw using touch or mouse, works on iOS, Android, Window Phone and browser.
 App uses touch events, MSPointer events and mouse events to support iOS, Android, Window Phone and desktop browser.
 
-### [Demo] (http://htmlpreview.github.io/?https://raw2.github.com/krisrak/html5-canvas-drawing-app/master/index_javascript.html) 
+### [Demo] (http://htmlpreview.github.io/?https://raw.githubusercontent.com/krisrak/html5-canvas-drawing-app/master/index_javascript.html) 
 
 -
 
