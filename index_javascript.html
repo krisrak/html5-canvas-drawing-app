@@ -179,7 +179,7 @@ var drawTouch = function() {
 // prototype to	start drawing on pointer(microsoft ie) using canvas moveTo and lineTo
 var drawPointer = function() {
 	var start = function(e) {
-        e = e.originalEvent;
+        e = e.originalEvent | e;
 		ctx.beginPath();
 		x = e.pageX;
 		y = e.pageY-44;
@@ -187,7 +187,7 @@ var drawPointer = function() {
 	};
 	var move = function(e) {
 		e.preventDefault();
-        e = e.originalEvent;
+        e = e.originalEvent | e;
 		x = e.pageX;
 		y = e.pageY-44;
 		ctx.lineTo(x,y);
