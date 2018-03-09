@@ -121,11 +121,35 @@
     var ctx, color = "#000";
 
     $(document).ready(function () {
+      const blockstack = window.blockstack
+      var login = false
+      var user = null
 
-    	// setup a new canvas for drawing wait for device init
-        setTimeout(function(){
-    	   newCanvas();
-        }, 1000);
+      $('#landing').toggle(!login)
+      $('#app').toggle(login)
+
+      if (blockstack.isUserSignedIn()) {
+        this.login = true
+        this.userData = blockstack.loadUserData()
+        this.user = new blockstack.Person(this.userData.profile)
+        this.user.username = this.userData.username
+        $('#avatar').attr('src',this.user.avatarUrl())
+        $('#username').text(this.user.name())
+      } else if (blockstack.isSignInPending()) {
+          blockstack.handlePendingSignIn()
+          .then((userData) => {
+            window.location = window.location.origin
+        })
+      }
+
+      $('#signinbtn').click(function(e) {
+        blockstack.redirectToSignIn()
+      })
+
+  	// setup a new canvas for drawing wait for device init
+      setTimeout(function(){
+  	   newCanvas();
+      }, 1000);
 
     	// reset palette selection (css) and select the clicked color for canvas strokeStyle
     	$(".palette").click(function(){
@@ -233,7 +257,7 @@
 </head>
 <body>
 <div id="landing">
-  <button type="button">Sign In with Blockstack</button>
+  <button type="button" id="signinbtn">Sign In with Blockstack</button>
 </div>
 <div id="app">
   <div id="page">
