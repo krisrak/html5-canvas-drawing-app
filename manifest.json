@@ -1,0 +1,10 @@
+{
+  "name": "Sketch",
+  "start_url": "/",
+  "description": "Sketch. Save. Repeat.",
+  "icons": [{
+    "src": "http://dant.org/sketch.png",
+    "sizes": "400x400",
+    "type": "image/png"
+  }]
+}
