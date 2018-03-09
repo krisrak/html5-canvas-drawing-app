@@ -3,7 +3,8 @@
 <head>
     <title>Sketch Pad</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0" />
-	<script src="lib/jquery/jquery-1.8.2.min.js"></script>
+	<script src="js/jquery-3.3.1.min.js"></script>
+  <script src="js/blockstack.js"></script>
     <style type="text/css">
 body {
     margin:0px;
@@ -21,7 +22,7 @@ body {
     /* prevent selection highlight */
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
-        
+
 .header, .footer{
     position: absolute;
     background-color: #222;
@@ -39,7 +40,7 @@ body {
     left: 0px;
     right: 0px;
     height: 42px;
-    padding:2px;    
+    padding:2px;
 }
 .title {
     width: auto;
@@ -62,13 +63,13 @@ body {
     border: solid 1px #111;
     border-radius: 4px;
     background-color: #404040;
-    box-shadow: 0 0 1px 1px #555,inset 0 1px 0 0 #666;     
+    box-shadow: 0 0 1px 1px #555,inset 0 1px 0 0 #666;
 }
 .navbtn-hover, .navbtn:active {
     color: #222;
     text-shadow: 0px 1px #aaa;
     background-color: #aaa;
-    box-shadow: 0 0 1px 1px #444,inset 0 1px 0 0 #ccc;   
+    box-shadow: 0 0 1px 1px #444,inset 0 1px 0 0 #ccc;
 }
 
 #content{
@@ -116,16 +117,16 @@ body {
 }
     </style>
 	<script type="text/javascript">
-	
-var ctx, color = "#000";	
+
+var ctx, color = "#000";
 
 $(document).ready(function () {
-	
+
 	// setup a new canvas for drawing wait for device init
     setTimeout(function(){
 	   newCanvas();
     }, 1000);
-		
+
 	// reset palette selection (css) and select the clicked color for canvas strokeStyle
 	$(".palette").click(function(){
 		$(".palette").css("border-color", "#777");
@@ -136,7 +137,7 @@ $(document).ready(function () {
 		ctx.beginPath();
 		ctx.strokeStyle = color;
 	});
-    
+
 	// link the new button with newCanvas() function
 	$("#new").click(function() {
 		newCanvas();
@@ -149,12 +150,12 @@ function newCanvas(){
     $("#content").height($(window).height()-90);
     var canvas = '<canvas id="canvas" width="'+$(window).width()+'" height="'+($(window).height()-90)+'"></canvas>';
 	$("#content").html(canvas);
-    
+
     // setup canvas
 	ctx=document.getElementById("canvas").getContext("2d");
 	ctx.strokeStyle = color;
-	ctx.lineWidth = 5;	
-	
+	ctx.lineWidth = 5;
+
 	// setup to trigger drawing on mouse or touch
 	$("#canvas").drawTouch();
     $("#canvas").drawPointer();
@@ -179,9 +180,9 @@ $.fn.drawTouch = function() {
 		ctx.stroke();
 	};
 	$(this).on("touchstart", start);
-	$(this).on("touchmove", move);	
-}; 
-    
+	$(this).on("touchmove", move);
+};
+
 // prototype to	start drawing on pointer(microsoft ie) using canvas moveTo and lineTo
 $.fn.drawPointer = function() {
 	var start = function(e) {
@@ -201,7 +202,7 @@ $.fn.drawPointer = function() {
     };
 	$(this).on("MSPointerDown", start);
 	$(this).on("MSPointerMove", move);
-};        
+};
 
 // prototype to	start drawing on mouse using canvas moveTo and lineTo
 $.fn.drawMouse = function() {
@@ -242,7 +243,7 @@ $.fn.drawMouse = function() {
 		<div class="palette-case">
 			<div class="palette-box">
 				<div class="palette white"></div>
-			</div>	
+			</div>
 			<div class="palette-box">
 				<div class="palette red"></div>
 			</div>
@@ -254,10 +255,10 @@ $.fn.drawMouse = function() {
 			</div>
 			<div class="palette-box">
 				<div class="palette black"></div>
-			</div>		
+			</div>
 			<div style="clear:both"></div>
 		</div>
     </div>
-</div> 
+</div>
 </body>
 </html>
